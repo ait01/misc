@@ -1,0 +1,44 @@
+{
+    "editor.fontSize": 10,
+    "editor.renderWhitespace": "all",
+    "python.pythonPath": "/bin/python3",
+    "telemetry.enableTelemetry": false,
+    "telemetry.enableCrashReporter": false,
+    "C_Cpp.errorSquiggles": "Enabled",
+    "C_Cpp.default.includePath": [
+        "${workspaceFolder}/**",
+        "/usr/src/**"
+    ],
+    "editor.tokenColorCustomizations": {
+        "textMateRules": [
+            {
+                "scope": "comment",
+                "settings": { "foreground": "#444444" }
+            },
+            {
+                "scope": "comment.block.documentation variable.parameter, comment.block.documentation keyword.other",
+                "settings": { "foreground": "#444444" }
+            },
+            {
+                "scope": "storage.type.class.doxygen",
+                "settings": { "foreground": "#666666" }
+            },
+            {
+                "scope": "keyword.control.return, keyword.control.if, keyword.control.else, keyword.control.for, keyword.control.switch, keyword.control.case, keyword.control.default, keyword.control.c, keyword.other.typedef, keyword.operator.sizeof",
+                "settings": { "fontStyle": "bold", "foreground": "#FFFFFF" }
+            },
+            {
+                "scope": "constant.language.nullptr, constant.language.true, constant.language.false",
+                "settings": { "fontStyle": "bold", "foreground": "#FFFFFF" }
+            },
+            {
+                "scope": "storage.modifier, storage.type.namespace, storage.type.modifier, storage.type.enum, storage.type.union, storage.type.struct, storage.type.class",
+                "settings": { "fontStyle": "bold", "foreground": "#FFFFFF" }
+            },
+            {
+                "scope": "storage.type.built-in.primitive",
+                "settings": { "foreground": "#7755AA" }
+            }
+        ]
+    },
+}
