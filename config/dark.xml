@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<style-scheme id="dark" _name="Dark" version="1.0">
+  <author>Author</author>
+  <_description>Dark Theme</_description>
+
+<!--Colors-->
+  <color name="black" value="#000000"/>
+  <color name="gray10" value="#111111"/>
+  <color name="gray30" value="#444444"/>
+  <color name="gray70" value="#aaaaaa"/>
+  <color name="white" value="#ffffff"/>
+  <color name="green" value="#33aa33"/>
+  <color name="cyan" value="#33aaaa"/>
+  <color name="blue" value="#3355aa"/>
+  <color name="violet" value="#7755aa"/>
+  <color name="magenta" value="#aa33aa"/>
+  <color name="red" value="#aa0000"/>
+  <color name="yellow" value="#aaaa33"/>
+
+<!--General-->
+  <style name="text" foreground="gray70" background="black"/>
+  <style name="cursor" foreground="white"/>
+  <style name="selection" foreground="white" background="blue"/>
+  <style name="current-line" background="gray10"/>
+  <style name="line-numbers" foreground="gray30" background="black"/>
+  <style name="current-line-number" background="gray10"/>
+  <style name="background-pattern" background="gray10"/>
+
+<!--Match-->
+  <style name="bracket-match" foreground="black" background="white"/>
+  <style name="bracket-mismatch" background="yellow" bold="true"/>
+  <style name="search-match" foreground="black" background="yellow"/>
+
+<!--Comments-->
+  <style name="def:comment" foreground="gray30"/>
+  <style name="def:shebang" foreground="magenta"/>
+  <style name="def:doc-comment-element" foreground="green" bold="true"/>
+  <style name="def:net-address-in-comment" foreground="blue" underline="true"/>
+  <style name="def:note" foreground="yellow"/>
+
+<!--Literals-->
+  <style name="def:number" foreground="white"/>
+  <style name="def:floating-point" foreground="white"/>
+  <style name="def:boolean" foreground="white"/>
+  <style name="def:character" foreground="white"/>
+  <style name="def:string" foreground="green"/>
+
+<!--Constants-->
+  <style name="def:constant" foreground="yellow"/>
+  <style name="def:special-char" foreground="white"/>
+  <style name="def:special-constant" foreground="yellow"/>
+
+<!--Builtins-->
+  <style name="def:builtin" foreground="cyan"/>
+  <style name="def:keyword" foreground="white" bold="true"/>
+  <style name="def:operator" foreground="white" bold="true"/>
+  <style name="def:reserved" foreground="yellow" background="red"/>
+  <style name="def:type" foreground="violet"/>
+
+<!--Identifiers-->
+  <style name="def:identifier" foreground="blue"/>
+  <style name="def:variable" foreground="magenta"/>
+
+<!--Other-->
+  <style name="def:error" foreground="white" background="red"/>
+  <style name="def:preprocessor" foreground="magenta"/>
+  <style name="def:specials" foreground="cyan"/>
+  <style name="def:function" foreground="blue"/>
+  <style name="def:statement" foreground="cyan"/>
+
+<!--Diff-->
+  <style name="diff:ignore" foreground="gray70"/>
+
+<!--sh-->
+  <style name="sh:function" foreground="cyan"/>
+  <style name="sh:variable1" foreground="violet"/>
+  <style name="sh:variable2" foreground="magenta"/>
+  <style name="sh:others" map-to="text"/>
+
+<!--xml-->
+  <style name="xml:attribute-name" foreground="cyan"/>
+  <style name="xml:element-name" foreground="blue"/>
+</style-scheme>
