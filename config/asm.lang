@@ -1,0 +1,463 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language id="asm" _name="Assembly" version="2.0" _section="Source">
+  <metadata>
+    <property name="mimetypes">text/x-asm;text/x-assembly</property>
+    <property name="globs">*.s;*.asm</property>
+    <property name="line-comment-start">#</property>
+    <property name="block-comment-start">/*</property>
+    <property name="block-comment-end">*/</property>
+  </metadata>
+  <styles>
+    <style id="comment"           _name="Comment"               map-to="def:comment"/>
+    <style id="string"            _name="String"                map-to="def:string"/>
+    <style id="preprocessor"      _name="Preprocessor"          map-to="def:preprocessor"/>
+    <style id="char"              _name="Character"             map-to="def:character"/>
+    <style id="operator"          _name="Operator"              map-to="def:operator"/>
+    <style id="immediate"         _name="Immediate"             map-to="def:specials"/>
+    <style id="label"             _name="Label"                 map-to="def:identifier"/>
+    <style id="register"          _name="Register"              map-to="def:type"/>
+    <style id="escaped-character" _name="Escaped Character"     map-to="def:special-char"/>
+    <style id="floating-point"    _name="Floating point number" map-to="def:floating-point"/>
+    <style id="decimal"           _name="Decimal number"        map-to="def:decimal"/>
+    <style id="octal"             _name="Octal number"          map-to="def:base-n-integer"/>
+    <style id="hexadecimal"       _name="Hexadecimal number"    map-to="def:base-n-integer"/>
+    <style id="instruction-data"  _name="Instruction Data"      map-to="def:keyword"/>
+    <style id="instruction"       _name="Instruction"           map-to="def:keyword"/>
+  </styles>
+
+  <definitions>
+    <define-regex id="escaped-character" extended="true">
+      \\(                   # leading backslash
+      [\\\"\'nrbtfav\?]|    # escaped character
+      [0-7]{1,3}|           # one, two, or three octal digits
+      x[0-9A-Fa-f]+)        # 'x' followed by hex digits
+    </define-regex>
+
+    <context id="comment" style-ref="comment" end-at-line-end="true">
+      <start>#</start>
+      <end>$</end>
+    </context>
+
+    <context id="string" style-ref="string" end-at-line-end="true">
+      <start>L?"</start>
+      <end>"</end>
+      <include>
+        <context id="escaped-character" style-ref="escaped-character">
+          <match>\%{escaped-character}</match>
+        </context>
+        <context ref="def:line-continue"/>
+      </include>
+    </context>
+
+    <context id="char" style-ref="char">
+      <match>L?'(\%{escaped-character}|.)'</match>
+    </context>
+
+    <context id="float" style-ref="floating-point">
+      <match extended="true">
+        (?&lt;![\w\.])
+        ((\.[0-9]+|[0-9]+\.[0-9]*)([Ee][+-]?[0-9]*)?|
+         ([0-9]+[Ee][+-]?[0-9]*))
+        [fFlL]?
+        (?![\w\.])
+      </match>
+    </context>
+
+    <context id="hexadecimal" style-ref="hexadecimal">
+      <match extended="true">
+        (?&lt;![\w\.])
+        0[xX][a-fA-F0-9]+[uUlL]*
+        (?![\w\.])
+      </match>
+    </context>
+
+    <context id="invalid-hexadecimal" style-ref="error">
+      <match extended="true">
+        (?&lt;![\w\.])
+        0[xX][a-fA-F0-9]*[g-zG-Z][a-zA-Z0-9]*[uUlL]*
+        (?![\w\.])
+      </match>
+    </context>
+
+    <context id="octal" style-ref="octal">
+      <match extended="true">
+        (?&lt;![\w\.])
+        0[0-7]+[uUlL]*
+        (?![\w\.])
+      </match>
+    </context>
+
+    <context id="invalid-octal" style-ref="error">
+      <match extended="true">
+        (?&lt;![\w\.])
+        0[0-7]*[89][0-9]*[uUlL]*
+        (?![\w\.])
+      </match>
+    </context>
+
+    <context id="decimal" style-ref="decimal">
+      <match extended="true">
+        (?&lt;![\w\.])
+        (0|[1-9][0-9]*)[uUlL]*
+        (?![\w\.])
+      </match>
+    </context>
+
+    <context id="preprocessor" style-ref="preprocessor">
+      <prefix>(^|\h)[\.@_]</prefix>
+      <keyword>include</keyword>
+      <keyword>section</keyword>
+      <keyword>data</keyword>
+      <keyword>bss</keyword>
+      <keyword>lcomm</keyword>
+      <keyword>text</keyword>
+      <keyword>globl</keyword>
+      <keyword>global</keyword>
+      <keyword>byte</keyword>
+      <keyword>word</keyword>
+      <keyword>long</keyword>
+      <keyword>quad</keyword>
+      <keyword>ascii</keyword>
+      <keyword>asciz</keyword>
+      <keyword>fill</keyword>
+      <keyword>macro</keyword>
+      <keyword>endm</keyword>
+      <keyword>equ</keyword>
+      <keyword>type</keyword>
+      <keyword>function</keyword>
+      <keyword>start</keyword>
+    </context>
+
+    <context id="operator" style-ref="operator">
+      <match>[-,:\+\*\/\(\)\{\}\[]|]</match>
+    </context>
+
+    <context id="immediate" style-ref="immediate">
+      <match>\$[A-Za-z0-9_\-\+]*</match>
+    </context>
+
+    <context id="label" style-ref="label">
+      <match>^[A-Za-z_][A-Za-z_0-9]*\:</match>
+    </context>
+
+    <context id="register" style-ref="register">
+      <!-- intel 386 -->
+      <keyword>eax</keyword>
+      <keyword>ebx</keyword>
+      <keyword>ecx</keyword>
+      <keyword>edx</keyword>    
+      <keyword>esi</keyword>
+      <keyword>edi</keyword>    
+      <keyword>esp</keyword>
+      <keyword>ebp</keyword>
+      <keyword>ax</keyword>
+      <keyword>bx</keyword>
+      <keyword>cx</keyword>
+      <keyword>dx</keyword>
+      <keyword>di</keyword>
+      <keyword>si</keyword>
+      <keyword>bp</keyword>
+      <keyword>sp</keyword>
+      <keyword>al</keyword>
+      <keyword>ah</keyword>
+      <keyword>bh</keyword>
+      <keyword>bl</keyword>
+      <keyword>ch</keyword>
+      <keyword>cl</keyword>
+      <keyword>dh</keyword>
+      <keyword>dl</keyword>
+      <keyword>cs</keyword>
+      <keyword>ds</keyword>
+      <keyword>ss</keyword>
+      <keyword>es</keyword>
+      <keyword>fs</keyword>
+      <keyword>gs</keyword>
+      <keyword>cr0</keyword>
+      <keyword>cr2</keyword>
+      <keyword>cr3</keyword>
+      <keyword>db0</keyword>
+      <keyword>db1</keyword>
+      <keyword>db2</keyword>
+      <keyword>db3</keyword>
+      <keyword>db6</keyword>
+      <keyword>db7</keyword>
+      <keyword>tr6</keyword>
+      <keyword>tr7</keyword>
+      <keyword>st</keyword>
+      <keyword>st(0)</keyword>
+      <keyword>st(1)</keyword>
+      <keyword>st(2)</keyword>
+      <keyword>st(3)</keyword>
+      <keyword>st(4)</keyword>
+      <keyword>st(5)</keyword>
+      <keyword>st(6)</keyword>
+      <keyword>st(7)</keyword>
+      <keyword>mm0</keyword>
+      <keyword>mm1</keyword>
+      <keyword>mm2</keyword>
+      <keyword>mm3</keyword>
+      <keyword>mm4</keyword>
+      <keyword>mm5</keyword>
+      <keyword>mm6</keyword>
+      <keyword>mm7</keyword>
+      <keyword>xmm0</keyword>
+      <keyword>xmm1</keyword>
+      <keyword>xmm2</keyword>
+      <keyword>xmm3</keyword>
+      <keyword>xmm4</keyword>
+      <keyword>xmm5</keyword>
+      <keyword>xmm6</keyword>
+      <keyword>xmm7</keyword>
+    </context>
+
+    <context id="instruction-data" style-ref="instruction-data">
+      <suffix>[bwl]</suffix>
+      <keyword>adc</keyword>
+      <keyword>add</keyword>
+      <keyword>and</keyword>
+      <keyword>bsf</keyword>
+      <keyword>bsr</keyword>
+      <keyword>bt</keyword>
+      <keyword>btc</keyword>
+      <keyword>btr</keyword>
+      <keyword>bts</keyword>
+      <keyword>cmp</keyword>
+      <keyword>cmps</keyword>
+      <keyword>dec</keyword>
+      <keyword>div</keyword>
+      <keyword>idiv</keyword>
+      <keyword>imul</keyword>
+      <keyword>in</keyword>
+      <keyword>inc</keyword>
+      <keyword>ins</keyword>
+      <keyword>lods</keyword>
+      <keyword>mov</keyword>
+      <keyword>movs</keyword>
+      <keyword>mul</keyword>
+      <keyword>neg</keyword>
+      <keyword>not</keyword>
+      <keyword>or</keyword>
+      <keyword>out</keyword>
+      <keyword>outs</keyword>
+      <keyword>pop</keyword>
+      <keyword>push</keyword>
+      <keyword>rcl</keyword>
+      <keyword>rcr</keyword>
+      <keyword>rol</keyword>
+      <keyword>ror</keyword>
+      <keyword>sal</keyword>
+      <keyword>sar</keyword>
+      <keyword>shl</keyword>
+      <keyword>shr</keyword>
+      <keyword>sbb</keyword>
+      <keyword>scas</keyword>
+      <keyword>stos</keyword>
+      <keyword>sub</keyword>
+      <keyword>test</keyword>
+      <keyword>xchg</keyword>
+      <keyword>xor</keyword>
+    </context>
+
+    <context id="instruction" style-ref="instruction">
+      <keyword>aaa</keyword>
+      <keyword>aad</keyword>
+      <keyword>aam</keyword>
+      <keyword>aas</keyword>
+      <keyword>arpl</keyword>
+      <keyword>bound</keyword>
+      <keyword>call</keyword>
+      <keyword>cbw</keyword>
+      <keyword>cwde</keyword>
+      <keyword>clc</keyword>
+      <keyword>cld</keyword>
+      <keyword>cli</keyword>
+      <keyword>clts</keyword>
+      <keyword>cmc</keyword>
+      <keyword>cwd</keyword>
+      <keyword>cdq</keyword>
+      <keyword>daa</keyword>
+      <keyword>das</keyword>
+      <keyword>enter</keyword>
+      <keyword>hlt</keyword>
+      <keyword>int</keyword>
+      <keyword>into</keyword>
+      <keyword>iret</keyword>
+      <keyword>iretd</keyword>
+      <keyword>ja</keyword>
+      <keyword>jae</keyword>
+      <keyword>jb</keyword>
+      <keyword>jbe</keyword>
+      <keyword>jc</keyword>
+      <keyword>jcxz</keyword>
+      <keyword>jecxz</keyword>
+      <keyword>je</keyword>
+      <keyword>jz</keyword>
+      <keyword>jg</keyword>
+      <keyword>jge</keyword>
+      <keyword>jl</keyword>
+      <keyword>jle</keyword>
+      <keyword>jna</keyword>
+      <keyword>jnae</keyword>
+      <keyword>jnb</keyword>
+      <keyword>jnbe</keyword>
+      <keyword>jnc</keyword>
+      <keyword>jne</keyword>
+      <keyword>jng</keyword>
+      <keyword>jnge</keyword>
+      <keyword>jnl</keyword>
+      <keyword>jnle</keyword>
+      <keyword>jno</keyword>
+      <keyword>jnp</keyword>
+      <keyword>jns</keyword>
+      <keyword>jnz</keyword>
+      <keyword>jo</keyword>
+      <keyword>jp</keyword>
+      <keyword>jpe</keyword>
+      <keyword>jpo</keyword>
+      <keyword>js</keyword>
+      <keyword>jz</keyword>
+      <keyword>ja</keyword>
+      <keyword>jae</keyword>
+      <keyword>jb</keyword>
+      <keyword>jbe</keyword>
+      <keyword>jc</keyword>
+      <keyword>je</keyword>
+      <keyword>jz</keyword>
+      <keyword>jg</keyword>
+      <keyword>jge</keyword>
+      <keyword>jl</keyword>
+      <keyword>jle</keyword>
+      <keyword>jna</keyword>
+      <keyword>jnae</keyword>
+      <keyword>jnb</keyword>
+      <keyword>jnbe</keyword>
+      <keyword>jnc</keyword>
+      <keyword>jne</keyword>
+      <keyword>jng</keyword>
+      <keyword>jnge</keyword>
+      <keyword>jnl</keyword>
+      <keyword>jnle</keyword>
+      <keyword>jno</keyword>
+      <keyword>jnp</keyword>
+      <keyword>jns</keyword>
+      <keyword>jnz</keyword>
+      <keyword>jo</keyword>
+      <keyword>jp</keyword>
+      <keyword>jpe</keyword>
+      <keyword>jpo</keyword>
+      <keyword>js</keyword>
+      <keyword>jz</keyword>
+      <keyword>jmp</keyword>
+      <keyword>lahf</keyword>
+      <keyword>lar</keyword>
+      <keyword>lea</keyword>
+      <keyword>leave</keyword>
+      <keyword>lgdt</keyword>
+      <keyword>lidt</keyword>
+      <keyword>lgs</keyword>
+      <keyword>lss</keyword>
+      <keyword>lds</keyword>
+      <keyword>les</keyword>
+      <keyword>lfs</keyword>
+      <keyword>lldt</keyword>
+      <keyword>lmsw</keyword>
+      <keyword>lock</keyword>
+      <keyword>loop</keyword>
+      <keyword>loopl</keyword>
+      <keyword>loope</keyword>
+      <keyword>loopel</keyword>
+      <keyword>loopnz</keyword>
+      <keyword>loopnzl</keyword>
+      <keyword>loopne</keyword>
+      <keyword>loopnel</keyword>
+      <keyword>loopz</keyword>
+      <keyword>loopzl</keyword>
+      <keyword>lsl</keyword>
+      <keyword>ltr</keyword>
+      <keyword>movsx</keyword>
+      <keyword>movzx</keyword>
+      <keyword>nop</keyword>
+      <keyword>popa</keyword>
+      <keyword>popad</keyword>
+      <keyword>popf</keyword>
+      <keyword>popfd</keyword>
+      <keyword>pusha</keyword>
+      <keyword>pushad</keyword>
+      <keyword>pushf</keyword>
+      <keyword>pushfd</keyword>
+      <keyword>rep</keyword>
+      <keyword>repe</keyword>
+      <keyword>repz</keyword>
+      <keyword>repne</keyword>
+      <keyword>repnz</keyword>
+      <keyword>ret</keyword>
+      <keyword>sahf</keyword>
+      <keyword>seta</keyword>
+      <keyword>setae</keyword>
+      <keyword>setb</keyword>
+      <keyword>setbe</keyword>
+      <keyword>setc</keyword>
+      <keyword>sete</keyword>
+      <keyword>setg</keyword>
+      <keyword>setge</keyword>
+      <keyword>setl</keyword>
+      <keyword>setle</keyword>
+      <keyword>setna</keyword>
+      <keyword>setnae</keyword>
+      <keyword>setnb</keyword>
+      <keyword>setnbe</keyword>
+      <keyword>setnc</keyword>
+      <keyword>setne</keyword>
+      <keyword>setng</keyword>
+      <keyword>setnge</keyword>
+      <keyword>setnl</keyword>
+      <keyword>setnle</keyword>
+      <keyword>setno</keyword>
+      <keyword>setnp</keyword>
+      <keyword>setns</keyword>
+      <keyword>setnz</keyword>
+      <keyword>seto</keyword>
+      <keyword>setp</keyword>
+      <keyword>setpe</keyword>
+      <keyword>setpo</keyword>
+      <keyword>sets</keyword>
+      <keyword>setz</keyword>
+      <keyword>sgdt</keyword>
+      <keyword>sidt</keyword>
+      <keyword>shld</keyword>
+      <keyword>shrd</keyword>
+      <keyword>sldt</keyword>
+      <keyword>smsw</keyword>
+      <keyword>stc</keyword>
+      <keyword>std</keyword>
+      <keyword>sti</keyword>
+      <keyword>str</keyword>
+      <keyword>verr</keyword>
+      <keyword>verw</keyword>
+      <keyword>wait</keyword>
+      <keyword>xlat</keyword>
+      <keyword>xlatb</keyword>
+    </context>
+
+    <context id="asm">
+      <include>
+        <context ref="comment"/>
+        <context ref="preprocessor"/>
+        <context ref="string"/>
+        <context ref="char"/>
+        <context ref="float"/>
+        <context ref="hexadecimal"/>
+        <context ref="invalid-hexadecimal"/>
+        <context ref="octal"/>
+        <context ref="invalid-octal"/>
+        <context ref="decimal"/>
+        <context ref="operator"/>
+        <context ref="immediate"/>
+        <context ref="label"/>
+        <context ref="register"/>
+        <context ref="instruction-data"/>
+        <context ref="instruction"/>
+      </include>
+    </context>
+  </definitions>
+</language>

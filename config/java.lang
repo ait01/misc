@@ -1,0 +1,463 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language id="java" _name="Java" version="2.0" _section="Source">
+  <metadata>
+    <property name="mimetypes">text/x-java</property>
+    <property name="globs">*.java</property>
+    <property name="line-comment-start">//</property>
+    <property name="block-comment-start">/*</property>
+    <property name="block-comment-end">*/</property>
+  </metadata>
+  <styles>
+    <style id="comment"           _name="Comment"                   map-to="def:comment"/>
+    <style id="escaped-character" _name="Escaped Character"         map-to="def:special-char"/>
+    <style id="string"            _name="String"                    map-to="def:string"/>
+    <style id="char"              _name="Character"                 map-to="def:character"/>
+    <style id="external"          _name="External"                  map-to="def:preprocessor"/>
+    <style id="declaration"       _name="Declaration"               map-to="def:type"/>
+    <style id="storage-class"     _name="Storage Class"             map-to="def:type"/>
+    <style id="scope"             _name="Scope"                     map-to="def:type"/>
+    <style id="keyword"           _name="Keyword"                   map-to="def:keyword"/>
+    <style id="constant"          _name="Constant"                  map-to="def:constant"/>
+    <style id="boolean"           _name="Boolean value"             map-to="def:boolean"/>
+    <style id="number"            _name="Number"                    map-to="def:decimal"/>
+    <style id="reserved"          _name="Reserved"                  map-to="def:reserved"/>
+    <style id="type"              _name="Data Type"                 map-to="def:type"/>
+    <style id="class"             _name="Class"                     map-to="def:builtin"/>
+    <style id="function"          _name="Function"                  map-to="def:function"/>
+  </styles>
+
+  <definitions>
+    <define-regex id="escaped-character" extended="true">
+      \\(               # leading backslash
+      [\\\"\'nrbtf]|    # escaped character
+      [0-9]{1,3}|       # latin encoded char
+      u[0-9]{1,4})      # unicode char
+    </define-regex>
+
+    <context id="string" style-ref="string" end-at-line-end="true" class="string" class-disabled="no-spell-check">
+      <start>"</start>
+      <end>"</end>
+      <include>
+        <context id="escaped-character" style-ref="escaped-character">
+          <match>\%{escaped-character}</match>
+        </context>
+      </include>
+    </context>
+
+   <context id="char" style-ref="char">
+     <match>'(\%{escaped-character}|.)'</match>
+   </context>
+
+    <context id="external" style-ref="external">
+      <keyword>import</keyword>
+      <keyword>package</keyword>
+    </context>
+
+    <context id="declaration" style-ref="declaration">
+      <keyword>class</keyword>
+      <keyword>enum</keyword>
+      <keyword>extends</keyword>
+      <keyword>implements</keyword>
+      <keyword>instanceof</keyword>
+      <keyword>interface</keyword>
+      <keyword>native</keyword>
+      <keyword>throws</keyword>
+    </context>
+
+    <context id="type" style-ref="type">
+      <keyword>boolean</keyword>
+      <keyword>byte</keyword>
+      <keyword>char</keyword>
+      <keyword>double</keyword>
+      <keyword>float</keyword>
+      <keyword>int</keyword>
+      <keyword>long</keyword>
+      <keyword>short</keyword>
+      <keyword>void</keyword>
+    </context>
+
+    <context id="storage-class" style-ref="storage-class">
+      <keyword>abstract</keyword>
+      <keyword>final</keyword>
+      <keyword>static</keyword>
+      <keyword>strictfp</keyword>
+      <keyword>synchronized</keyword>
+      <keyword>transient</keyword>
+      <keyword>volatile</keyword>
+    </context>
+
+    <context id="scope" style-ref="scope">
+      <keyword>private</keyword>
+      <keyword>protected</keyword>
+      <keyword>public</keyword>
+    </context>
+
+    <context id="flow" style-ref="keyword">
+      <keyword>assert</keyword>
+      <keyword>break</keyword>
+      <keyword>case</keyword>
+      <keyword>catch</keyword>
+      <keyword>continue</keyword>
+      <keyword>default</keyword>
+      <keyword>do</keyword>
+      <keyword>else</keyword>
+      <keyword>finally</keyword>
+      <keyword>for</keyword>
+      <keyword>if</keyword>
+      <keyword>return</keyword>
+      <keyword>throw</keyword>
+      <keyword>switch</keyword>
+      <keyword>try</keyword>
+      <keyword>while</keyword>
+    </context>
+
+    <context id="memory" style-ref="keyword">
+      <keyword>new</keyword>
+      <keyword>super</keyword>
+      <keyword>this</keyword>
+    </context>
+
+    <context id="reserved" style-ref="reserved">
+      <keyword>const</keyword>
+      <keyword>goto</keyword>
+    </context>
+
+    <context id="constant" style-ref="constant">
+      <keyword>null</keyword>
+    <!--java.base-->
+      <!--java.lang-->
+      <!--Math-->
+      <keyword>E</keyword>
+      <keyword>PI</keyword>
+    <!--java.desktop-->
+      <!--java.awt-->
+      <!--Color-->
+      <keyword>RED</keyword>
+      <keyword>YELLOW</keyword>
+      <!--Font-->
+      <keyword>BOLD</keyword>
+      <keyword>ITALIC</keyword>
+      <keyword>PLAIN</keyword>
+      <!--java.awt.event-->
+      <!--ItemEvent-->
+      <keyword>DESELECTED</keyword>
+      <keyword>SELECTED</keyword>
+      <!--javax.swing-->
+      <!--JOptionPane-->
+      <keyword>ERROR_MESSAGE</keyword>
+      <keyword>INFORMATION_MESSAGE</keyword>
+      <keyword>OK_CANCEL_OPTION</keyword>
+      <keyword>PLAIN_MESSAGE</keyword>
+      <keyword>WARNING_MESSAGE</keyword>
+      <keyword>YES_NO_CANCEL_OPTION</keyword>
+      <keyword>YES_NO_OPTION</keyword>
+      <!--ScrollPaneConstants-->
+      <keyword>VERTICAL_SCROLLBAR_ALWAYS</keyword>
+      <!--SwingConstants-->
+      <keyword>BOTTOM</keyword>
+      <keyword>CENTER</keyword>
+      <keyword>LEFT</keyword>
+      <keyword>RIGHT</keyword>
+      <keyword>TOP</keyword>
+      <!--WindowConstants-->
+      <keyword>EXIT_ON_CLOSE</keyword>
+    </context>
+
+    <context id="boolean" style-ref="boolean">
+      <keyword>false</keyword>
+      <keyword>true</keyword>
+    </context>
+
+    <context id="number" style-ref="number">
+      <match extended="true">
+        (\b([0-9]+|0[xX][0-9a-fA-F]+)[Ll]?\b|
+        \b(([0-9]+[Ee][-]?[0-9]+|
+           ([0-9]*\.[0-9]+|[0-9]+\.)([Ee][-]?[0-9]+)?)[fFdD]?|
+            [0-9]+[FfDd]))
+      </match>
+    </context>
+
+    <context id="class" style-ref="class">
+    <!--java.base-->
+      <!--java.io-->
+      <keyword>BufferedReader</keyword>
+      <keyword>BufferedWriter</keyword>
+      <keyword>Console</keyword>
+      <keyword>File</keyword>
+      <keyword>FileReader</keyword>
+      <keyword>FileWriter</keyword>
+      <keyword>InputStreamReader</keyword>
+      <keyword>OutputStreamWriter</keyword>
+      <keyword>PrintStream</keyword>
+      <keyword>Reader</keyword>
+      <keyword>Writer</keyword>
+      <!--java.lang-->
+      <keyword>Class</keyword>
+      <keyword>ClassLoader</keyword>
+      <keyword>Float</keyword>
+      <keyword>Integer</keyword>
+      <keyword>Math</keyword>
+      <keyword>Object</keyword>
+      <keyword>String</keyword>
+      <keyword>System</keyword>
+        <!--System-->
+      <keyword>err</keyword>
+      <keyword>in</keyword>
+      <keyword>out</keyword>
+      <!--java.net-->
+      <keyword>URL</keyword>
+      <!--java.text-->
+      <keyword>NumberFormat</keyword>
+      <!--java.time-->
+      <keyword>LocalDateTime</keyword>
+      <keyword>ZonedDateTime</keyword>
+      <!--java.time.format-->
+      <keyword>DateTimeFormatter</keyword>
+      <!--java.util-->
+      <keyword>ArrayList</keyword>
+      <keyword>Arrays</keyword>
+      <keyword>EventObject</keyword>
+    <!--java.desktop-->
+      <!--java.awt-->
+      <keyword>Color</keyword>
+      <keyword>Component</keyword>
+      <keyword>Container</keyword>
+      <keyword>Font</keyword>
+      <keyword>GridLayout</keyword>
+      <keyword>Window</keyword>
+      <!--java.awt.event-->
+      <keyword>ActionEvent</keyword>
+      <keyword>ActionListener</keyword>
+      <keyword>ItemEvent</keyword>
+      <keyword>ItemListener</keyword>
+      <keyword>KeyEvent</keyword>
+      <keyword>KeyListener</keyword>
+      <keyword>MouseEvent</keyword>
+      <keyword>MouseListener</keyword>
+      <keyword>MouseMotionListener</keyword>
+      <keyword>MouseWheelListener</keyword>
+      <!--javax.swing-->
+      <keyword>AbstractButton</keyword>
+      <keyword>Box</keyword>
+      <keyword>ButtonGroup</keyword>
+      <keyword>ImageIcon</keyword>
+      <keyword>JButton</keyword>
+      <keyword>JCheckBox</keyword>
+      <keyword>JComboBox</keyword>
+      <keyword>JComponent</keyword>
+      <keyword>JFrame</keyword>
+      <keyword>JLabel</keyword>
+      <keyword>JList</keyword>
+      <keyword>JOptionPane</keyword>
+      <keyword>JPanel</keyword>
+      <keyword>JPasswordField</keyword>
+      <keyword>JRadioButton</keyword>
+      <keyword>JScrollPane</keyword>
+      <keyword>JTextArea</keyword>
+      <keyword>JTextField</keyword>
+      <!--javax.swing.text-->
+      <keyword>JTextComponent</keyword>
+    </context>
+
+    <context id="function" style-ref="function">
+      <suffix>(?=\()</suffix>
+      <keyword>main</keyword>
+    <!--java.base-->
+      <!--java.io-->
+      <!--BufferedReader-->
+      <keyword>readLine</keyword>
+      <!--BufferedWriter-->
+      <keyword>newLine</keyword>
+      <!--Reader-->
+      <keyword>close</keyword>
+      <keyword>read</keyword>
+      <!--Writer-->
+      <keyword>append</keyword>
+      <keyword>flush</keyword>
+      <keyword>write</keyword>
+      <!--File-->
+      <keyword>createNewFile</keyword>
+      <keyword>delete</keyword>
+      <keyword>exists</keyword>
+      <keyword>getName</keyword>
+      <keyword>list</keyword>
+      <keyword>renameTo</keyword>
+      <!--PrintStream-->
+      <keyword>print</keyword>
+      <keyword>printf</keyword>
+      <keyword>println</keyword>
+      <!--java.lang-->
+      <!--Class-->
+      <keyword>getClassLoader</keyword>
+      <!--ClassLoader-->
+      <keyword>getResource</keyword>
+      <!--Float-->
+      <keyword>parseFloat</keyword>
+      <!--Integer-->
+      <keyword>parseInt</keyword>
+      <!--Math-->
+      <keyword>ceil</keyword>
+      <keyword>floor</keyword>
+      <keyword>max</keyword>
+      <keyword>min</keyword>
+      <keyword>pow</keyword>
+      <keyword>random</keyword>
+      <keyword>round</keyword>
+      <keyword>sqrt</keyword>
+      <!--Object-->
+      <keyword>clone</keyword>
+      <keyword>equals</keyword>
+      <keyword>getClass</keyword>
+      <keyword>hashCode</keyword>
+      <keyword>toString</keyword>
+      <!--String-->
+      <keyword>charAt</keyword>
+      <keyword>concat</keyword>
+      <keyword>endsWith</keyword>
+      <keyword>indexOf</keyword>
+      <keyword>isEmpty</keyword>
+      <keyword>length</keyword>
+      <keyword>replace</keyword>
+      <keyword>startsWith</keyword>
+      <keyword>substring</keyword>
+      <keyword>toUpperCase</keyword>
+      <keyword>toLowerCase</keyword>
+      <keyword>trim</keyword>
+      <!--System-->
+      <keyword>console</keyword>
+      <!--java.text-->
+      <!--NumberFormat-->
+      <keyword>format</keyword>
+      <keyword>getCurrencyInstance</keyword>
+      <keyword>getNumberInstance</keyword>
+      <keyword>getPercentInstance</keyword>
+      <!--java.time-->
+      <!--LocalDateTime-->
+      <keyword>getDayOfMonth</keyword>
+      <keyword>getDayOfWeek</keyword>
+      <keyword>getDayOfYear</keyword>
+      <keyword>getHour</keyword>
+      <keyword>getMinute</keyword>
+      <keyword>getMonth</keyword>
+      <keyword>getMonthValue</keyword>
+      <keyword>getSecond</keyword>
+      <keyword>getYear</keyword>
+      <keyword>now</keyword>
+      <keyword>withYear</keyword>
+      <!--ZonedDateTime-->
+      <keyword>getZone</keyword>
+      <!--java.time.format-->
+      <!--DateTimeFormatter-->
+      <keyword>ofPattern</keyword>
+      <!--java.util-->
+      <!--ArrayList-->
+      <keyword>add</keyword>
+      <keyword>forEach</keyword>
+      <keyword>get</keyword>
+      <keyword>remove</keyword>
+      <keyword>set</keyword>
+      <!--Arrays-->
+      <keyword>sort</keyword>
+      <!--EventObject-->
+      <keyword>getSource</keyword>
+    <!--java.desktop-->
+      <!--java.awt-->
+      <!--Component-->
+      <keyword>addKeyListener</keyword>
+      <keyword>addMouseListener</keyword>
+      <keyword>addMouseMotionListener</keyword>
+      <keyword>addMouseWheelListener</keyword>
+      <!--Window-->
+      <keyword>setSize</keyword>
+      <keyword>setVisible</keyword>
+      <!--java.awt.event-->
+      <!--ActionEvent-->
+      <keyword>getActionCommand</keyword>
+      <!--ActionListener-->
+      <keyword>actionPerformed</keyword>
+      <!--ItemEvent-->
+      <keyword>getItem</keyword>
+      <keyword>getItemSelectable</keyword>
+      <keyword>getStateChange</keyword>
+      <!--ItemListener-->
+      <keyword>itemStateChanged</keyword>
+      <!--KeyEvent-->
+      <keyword>getKeyChar</keyword>
+      <keyword>getKeyCode</keyword>
+      <keyword>getKeyText</keyword>
+      <!--KeyListener-->
+      <keyword>keyPressed</keyword>
+      <keyword>keyReleased</keyword>
+      <keyword>keyTyped</keyword>
+      <!--MouseEvent-->
+      <keyword>getX</keyword>
+      <keyword>getY</keyword>
+      <!--MouseListener-->
+      <keyword>mouseClicked</keyword>
+      <keyword>mouseEntered</keyword>
+      <keyword>mouseExited</keyword>
+      <keyword>mousePressed</keyword>
+      <keyword>mouseReleased</keyword>
+      <!--MouseMotionListener-->
+      <keyword>mouseDragged</keyword>
+      <keyword>mouseMoved</keyword>
+      <!--javax.swing-->
+      <!--AbstractButton-->
+      <keyword>addActionListener</keyword>
+      <keyword>addItemListener</keyword>
+      <!--Box-->
+      <keyword>createVerticalBox</keyword>
+      <!--JComboBox-->
+      <keyword>setSelectedIndex</keyword>
+      <!--JComponent-->
+      <keyword>setBackground</keyword>
+      <keyword>setEnabled</keyword>
+      <keyword>setFont</keyword>
+      <keyword>setForeground</keyword>
+      <keyword>setOpaque</keyword>
+      <keyword>setToolTipText</keyword>
+      <!--JFrame-->
+      <keyword>getContentPane</keyword>
+      <keyword>setDefaultCloseOperation</keyword>
+      <!--JLabel-->
+      <keyword>setHorizontalTextPosition</keyword>
+      <keyword>setVerticalTextPosition</keyword>
+      <!--JOptionPane-->
+      <keyword>showConfirmDialog</keyword>
+      <keyword>showInputDialog</keyword>
+      <keyword>showMessageDialog</keyword>
+      <!--JScrollPane-->
+      <keyword>setHorizontalScrollBarPolicy</keyword>
+      <keyword>setVerticalScrollBarPolicy</keyword>
+      <!--JTextArea-->
+      <keyword>setLineWrap</keyword>
+      <keyword>setWrapStyleWord</keyword>
+      <!--javax.swing.text-->
+      <!--JTextComponent-->
+      <keyword>setText</keyword>
+    </context>
+
+    <context id="java">
+      <include>
+        <context ref="def:c-like-comment" style-ref="comment"/>
+        <context ref="def:c-like-comment-multiline" style-ref="comment"/>
+        <context ref="def:c-like-close-comment-outside-comment"/>
+        <context ref="string"/>
+        <context ref="char"/>
+        <context ref="external"/>
+        <context ref="declaration"/>
+        <context ref="type"/>
+        <context ref="storage-class"/>
+        <context ref="scope"/>
+        <context ref="flow"/>
+        <context ref="memory"/>
+        <context ref="reserved"/>
+        <context ref="constant"/>
+        <context ref="boolean"/>
+        <context ref="number"/>
+        <context ref="class"/>
+        <context ref="function"/>
+      </include>
+    </context>
+  </definitions>
+</language>

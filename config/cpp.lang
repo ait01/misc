@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language id="cpp" _name="C++" version="2.0" _section="Source">
+  <metadata>
+    <property name="mimetypes">text/x-c++;text/x-cpp;text/x-c++src</property>
+    <property name="globs">*.cpp;*.cxx;*.cc;*.C;*.c++</property>
+    <property name="line-comment-start">//</property>
+    <property name="block-comment-start">/*</property>
+    <property name="block-comment-end">*/</property>
+  </metadata>
+  <styles>
+    <style id="keyword" _name="Keyword" map-to="c:keyword"/>
+    <style id="type" _name="Data Type" map-to="c:type"/>
+    <style id="common-define" _name="Common Define" map-to="c:common-define"/>
+    <style id="object" _name="Object" map-to="def:builtin"/>
+    <style id="function" _name="Function" map-to="c:function"/>
+  </styles>
+
+  <definitions>
+  <!--C++-specific stuff, which is not C-->
+    <context id="cpp-proper">
+      <include>
+        <context id="keyword" style-ref="keyword">
+          <keyword>alignas</keyword>
+          <keyword>alignof</keyword>
+          <keyword>and</keyword>
+          <keyword>and_eq</keyword>
+          <keyword>bitand</keyword>
+          <keyword>bitor</keyword>
+          <keyword>catch</keyword>
+          <keyword>class</keyword>
+          <keyword>compl</keyword>
+          <keyword>constexpr</keyword>
+          <keyword>const_cast</keyword>
+          <keyword>decltype</keyword>
+          <keyword>delete</keyword>
+          <keyword>dynamic_cast</keyword>
+          <keyword>false</keyword>
+          <keyword>final</keyword>
+          <keyword>friend</keyword>
+          <keyword>namespace</keyword>
+          <keyword>new</keyword>
+          <keyword>noexcept</keyword>
+          <keyword>not</keyword>
+          <keyword>not_eq</keyword>
+          <keyword>nullptr</keyword>
+          <keyword>operator</keyword>
+          <keyword>or</keyword>
+          <keyword>or_eq</keyword>
+          <keyword>override</keyword>
+          <keyword>private</keyword>
+          <keyword>protected</keyword>
+          <keyword>public</keyword>
+          <keyword>reinterpret_cast</keyword>
+          <keyword>static_assert</keyword>
+          <keyword>static_cast</keyword>
+          <keyword>template</keyword>
+          <keyword>this</keyword>
+          <keyword>thread_local</keyword>
+          <keyword>throw</keyword>
+          <keyword>true</keyword>
+          <keyword>try</keyword>
+          <keyword>typeid</keyword>
+          <keyword>typename</keyword>
+          <keyword>using</keyword>
+          <keyword>virtual</keyword>
+          <keyword>xor</keyword>
+          <keyword>xor_eq</keyword>
+        </context>
+
+        <context id="type" style-ref="type">
+          <keyword>char(16|32)_t</keyword>
+          <keyword>explicit</keyword>
+          <keyword>export</keyword>
+          <keyword>inline</keyword>
+          <keyword>mutable</keyword>
+          <keyword>nullptr_t</keyword>
+          <keyword>streamsize</keyword>
+          <keyword>wchar_t</keyword>
+        </context>
+
+        <context id="common-define" style-ref="common-define">
+          <keyword>__STDC__</keyword>
+          <keyword>__cplusplus</keyword>
+        </context>
+
+        <!--Standard Objects-->
+        <context id="object" style-ref="object">
+          <keyword>std</keyword>
+          <!--Language Support-->
+          <!--limits-->
+          <keyword>numeric_limits</keyword>
+          <!--General Utility-->
+          <!--tuple-->
+          <keyword>tuple</keyword>
+          <!--String-->
+          <!--string-->
+          <keyword>string</keyword>
+          <!--Container-->
+          <!--forward_list-->
+          <keyword>forward_list</keyword>
+          <!--list-->
+          <keyword>list</keyword>
+          <!--vector-->
+          <keyword>vector</keyword>
+          <!--Numeric-->
+          <!--random-->
+          <keyword>default_random_engine</keyword>
+          <keyword>random_device</keyword>
+          <keyword>uniform_int_distribution</keyword>
+          <keyword>uniform_real_distribution</keyword>
+          <!--I/O-->
+          <!--ios-->
+          <keyword>basic_ios</keyword>
+          <!--istream-->
+          <keyword>basic_istream</keyword>
+          <!--iostream-->
+          <keyword>cerr</keyword>
+          <keyword>cin</keyword>
+          <keyword>clog</keyword>
+          <keyword>cout</keyword>
+          <!--ostream-->
+          <keyword>endl</keyword>
+          <keyword>ends</keyword>
+        </context>
+
+        <!--Standard Member Functions-->
+        <context id="function" style-ref="function">
+          <suffix>(?=\ ?\()</suffix>
+          <!--Language Support-->
+          <!--limits-->
+          <!--numeric_limits-->
+          <keyword>is_signed</keyword>
+          <keyword>max</keyword>
+          <keyword>min</keyword>
+          <!--I/O-->
+          <!--ios-->
+          <!--basic_ios-->
+          <keyword>clear</keyword>
+          <!--istream-->
+          <!--basic_istream-->
+          <keyword>get</keyword>
+          <keyword>ignore</keyword>
+        </context>
+      </include>
+    </context>
+
+    <!--Actual language definition: C++-specific stuff plus everything from C-->
+    <context id="cpp">
+      <include>
+        <context ref="c:c"/>
+        <context ref="cpp-proper"/>
+      </include>
+    </context>
+  </definitions>
+</language>
