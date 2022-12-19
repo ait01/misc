@@ -20,8 +20,7 @@ int main()
         if ((i = std::getchar()) == ' ' || i == '\t' || i == '\n' || i == EOF) ++w[j], j = 0;
         else if (i < MAXC) ++c[i], ++j;
         else { std::puts("Not ASCII."); return 1; }
-    }
-    while (i != EOF);
+    } while (i != EOF);
     /* Find the highest frequency of a character. */
     for (i = 0; i < MAXC; ++i) if (c[i] > most) most = c[i];
     std::puts("\nCharacter Statistics:");
