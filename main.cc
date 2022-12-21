@@ -6,6 +6,7 @@
 int main([[maybe_unused]] int argc, char *argv[])
 {
     std::cout << argv[0] << " Version " << VERSION << std::endl;
+    std::cout << "Commit " << COMMIT << std::endl;
     std::cout << "The C++ version is " << __cplusplus << '.' << std::endl;
     auto begin = std::chrono::steady_clock::now();
 
