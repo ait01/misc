@@ -1,7 +1,6 @@
 #ifndef VERSION_H
 #define VERSION_H
 
-#define VERSION_MAJOR @misc_VERSION_MAJOR@
-#define VERSION_MINOR @misc_VERSION_MINOR@
+#define VERSION "@misc_VERSION@"
 
 #endif //VERSION_H

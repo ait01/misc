@@ -85,7 +85,6 @@ void checkTypes(void)
     std::printf("The value of 'EXIT_FAILURE' is %i.\n", EXIT_FAILURE);
     std::printf("The value of 'RAND_MAX' is %i.\n", RAND_MAX);
     std::printf("The value of 'EOF' is %i.\n", EOF);
-    std::printf("The value of 'getchar() == EOF' is %i.\n", (std::getchar() == EOF));
 
     int A[SIZE] = { 0 };
     char B[SIZE] = { 0 };

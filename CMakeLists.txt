@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.15)
-project(misc VERSION 1.0)
+project(misc VERSION 1.0.0)
 configure_file(version.hh.in ${CMAKE_CURRENT_LIST_DIR}/include/version.hh)
 
 set(TARGET misc)
