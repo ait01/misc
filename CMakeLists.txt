@@ -8,7 +8,7 @@ execute_process(COMMAND git rev-parse HEAD
 
 configure_file(version.hh.in ${CMAKE_CURRENT_LIST_DIR}/include/version.hh)
 
-set(TARGET misc)
+set(APP misc)
 set(BIN_DIR bin/)
 
 set(CMAKE_CXX_STANDARD 17)
@@ -19,6 +19,6 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${BIN_DIR})
 
 add_compile_options(-Wpedantic -Wall -Wextra -Werror)
 
-add_executable(${TARGET} main.cc)
-target_include_directories(${TARGET} PUBLIC include/)
+add_executable(${APP} main.cc)
+target_include_directories(${APP} PUBLIC include/)
 add_subdirectory(src/)

@@ -1,1 +1,1 @@
-target_sources(${TARGET} PRIVATE misc.cc)
+target_sources(${APP} PRIVATE misc.cc)
