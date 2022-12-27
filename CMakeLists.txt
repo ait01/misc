@@ -21,4 +21,6 @@ add_executable(${APP} main.cc)
 target_include_directories(${APP} PUBLIC include/)
 
 add_subdirectory(src/)
+add_subdirectory(log/)
+add_subdirectory(util/)
 add_subdirectory(test/)
