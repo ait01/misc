@@ -64,7 +64,7 @@ TEST_F(Util, RandomPositive) {
     printHex("Buffer2", buffs[2], true);
 }
 
-TEST_F(Util, RandomBadParams) {
+TEST_F(Util, RandomBadArgs) {
     auto rc = random(nullptr, buffs[0].size());
     ASSERT_EQ(rc, RC::BAD_ARGS);
 
@@ -87,7 +87,7 @@ TEST_F(Util, ZeroizePositive) {
     printHex("Buffer0", buffs[0], true);
 }
 
-TEST_F(Util, ZeroizeBadParams) {
+TEST_F(Util, ZeroizeBadArgs) {
     buffs[0] = random(BUFF_LEN);
     checkBuffRandom(buffs[0]);
 
