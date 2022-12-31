@@ -66,14 +66,14 @@ TEST_F(Util, RandomPositive) {
 
 TEST_F(Util, RandomBadParams) {
     auto rc = random(nullptr, buffs[0].size());
-    ASSERT_EQ(rc, RC::BAD_PARAMS);
+    ASSERT_EQ(rc, RC::BAD_ARGS);
 
     rc = random(buffs[0].data(), 0);
-    ASSERT_EQ(rc, RC::BAD_PARAMS);
+    ASSERT_EQ(rc, RC::BAD_ARGS);
 
     buffs[0].clear();
     rc = random(buffs[0]);
-    ASSERT_EQ(rc, RC::BAD_PARAMS);
+    ASSERT_EQ(rc, RC::BAD_ARGS);
 }
 
 TEST_F(Util, ZeroizePositive) {
@@ -92,7 +92,7 @@ TEST_F(Util, ZeroizeBadParams) {
     checkBuffRandom(buffs[0]);
 
     auto rc = zeroize(nullptr, buffs[0].size());
-    ASSERT_EQ(rc, RC::BAD_PARAMS);
+    ASSERT_EQ(rc, RC::BAD_ARGS);
     rc = zeroize(buffs[0].data(), 0);
-    ASSERT_EQ(rc, RC::BAD_PARAMS);
+    ASSERT_EQ(rc, RC::BAD_ARGS);
 }

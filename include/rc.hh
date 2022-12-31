@@ -4,7 +4,7 @@
 enum class RC
 {
     OK,
-    BAD_PARAMS
+    BAD_ARGS
 };
 
 #endif //RC_H

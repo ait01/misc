@@ -7,11 +7,11 @@ RC zeroize(void *s, std::size_t n)
     LOGD("Zeroizing memory.");
     if (!n) {
         LOGE("Bad parameter: 'n' is 0.");
-        return RC::BAD_PARAMS;
+        return RC::BAD_ARGS;
     }
     if (s == nullptr) {
         LOGE("Bad parameter: 's' is nullptr.");
-        return RC::BAD_PARAMS;
+        return RC::BAD_ARGS;
     }
     volatile std::uint8_t *p = (std::uint8_t*)s;
     while (n--) *p++ = 0;
@@ -33,7 +33,7 @@ RC random(std::vector<std::uint8_t> &buff)
 {
     if (buff.empty()) {
         LOGE("Buffer is empty.");
-        return RC::BAD_PARAMS;
+        return RC::BAD_ARGS;
     }
     buff = random(buff.size());
     return RC::OK;
@@ -43,11 +43,11 @@ RC random(std::uint8_t *buff, std::size_t buffLen)
 {
     if (!buffLen) {
         LOGE("Bad parameter: buffer length is 0.");
-        return RC::BAD_PARAMS;
+        return RC::BAD_ARGS;
     }
     if (buff == nullptr) {
         LOGE("Bad parameter: buffer is nullptr.");
-        return RC::BAD_PARAMS;
+        return RC::BAD_ARGS;
     }
     auto buff_ = random(buffLen);
     std::copy(buff_.cbegin(), buff_.cend(), buff);
