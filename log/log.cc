@@ -69,7 +69,7 @@ void logCritical(const char *funcName, int line, const char *fmt, ...)
     va_end(args);
 }
 
-void printArray(const std::string &name, const std::vector<std::uint8_t> &arr, bool pretty) {
+void printHex(const std::string &name, const std::vector<std::uint8_t> &arr, bool pretty) {
     std::cout << name << " size " << arr.size() << std::hex << std::endl;
     for (std::size_t i = 0; i < arr.size(); ++i) {
         std::cout << std::setw(2) << std::setfill('0') << static_cast<unsigned>(arr[i]);
@@ -78,6 +78,6 @@ void printArray(const std::string &name, const std::vector<std::uint8_t> &arr, b
     std::cout << std::dec << std::endl;
 }
 
-void printArray(const char *name, const std::uint8_t *arr, std::size_t len, bool pretty) {
-    printArray(name, std::vector<std::uint8_t>(arr, arr + len), pretty);
+void printHex(const char *name, const std::uint8_t *arr, std::size_t len, bool pretty) {
+    printHex(name, std::vector<std::uint8_t>(arr, arr + len), pretty);
 }

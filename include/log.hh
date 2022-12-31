@@ -32,7 +32,7 @@ void logInfo(const char *funcName, int line, const char *fmt, ...);
 void logWarning(const char *funcName, int line, const char *fmt, ...);
 void logError(const char *funcName, int line, const char *fmt, ...);
 void logCritical(const char *funcName, int line, const char *fmt, ...);
-void printArray(const std::string &name, const std::vector<std::uint8_t> &arr, bool pretty = false);
-void printArray(const char *name, const std::uint8_t *arr, std::size_t len, bool pretty = false);
+void printHex(const std::string &name, const std::vector<std::uint8_t> &arr, bool pretty = false);
+void printHex(const char *name, const std::uint8_t *arr, std::size_t len, bool pretty = false);
 
 #endif //LOG_H
