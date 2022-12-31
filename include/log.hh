@@ -3,27 +3,27 @@
 
 #include <vector>
 
-#define LOG(LOG_LEVEL, logFunc, funcName, line, ...) do { if (logLevel <= LOG_LEVEL) (logFunc)(funcName, line, __VA_ARGS__); } while (0)
-#define LOGD(...) LOG(LogLevel::LOG_LEVEL_DEBUG, logDebug, __func__, __LINE__, __VA_ARGS__);
-#define LOGI(...) LOG(LogLevel::LOG_LEVEL_INFO, logInfo, __func__, __LINE__, __VA_ARGS__);
-#define LOGW(...) LOG(LogLevel::LOG_LEVEL_WARNING, logWarning, __func__, __LINE__, __VA_ARGS__);
-#define LOGE(...) LOG(LogLevel::LOG_LEVEL_ERROR, logError, __func__, __LINE__, __VA_ARGS__);
-#define LOGC(...) LOG(LogLevel::LOG_LEVEL_CRITICAL, logCritical, __func__, __LINE__, __VA_ARGS__);
+#define LOG(logLevel, logFunc, funcName, line, ...) do { if (_logLevel_ <= logLevel) (logFunc)(funcName, line, __VA_ARGS__); } while (0)
+#define LOGD(...) LOG(LogLevel::DEBUG, logDebug, __func__, __LINE__, __VA_ARGS__);
+#define LOGI(...) LOG(LogLevel::INFO, logInfo, __func__, __LINE__, __VA_ARGS__);
+#define LOGW(...) LOG(LogLevel::WARNING, logWarning, __func__, __LINE__, __VA_ARGS__);
+#define LOGE(...) LOG(LogLevel::ERROR, logError, __func__, __LINE__, __VA_ARGS__);
+#define LOGC(...) LOG(LogLevel::CRITICAL, logCritical, __func__, __LINE__, __VA_ARGS__);
 
 #ifndef LOG_LEVEL_DEFAULT
-#define LOG_LEVEL_DEFAULT (LogLevel::LOG_LEVEL_INFO)
+#define LOG_LEVEL_DEFAULT (LogLevel::INFO)
 #endif //LOG_LEVEL_DEFAULT
 
 enum class LogLevel
 {
-    LOG_LEVEL_DEBUG,
-    LOG_LEVEL_INFO,
-    LOG_LEVEL_WARNING,
-    LOG_LEVEL_ERROR,
-    LOG_LEVEL_CRITICAL
+    DEBUG,
+    INFO,
+    WARNING,
+    ERROR,
+    CRITICAL
 };
 
-extern LogLevel logLevel;
+extern LogLevel _logLevel_;
 
 void setLogLevel(LogLevel level);
 LogLevel getLogLevel(void);

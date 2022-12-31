@@ -4,10 +4,10 @@
 #include <iomanip>
 #include "log.hh"
 
-LogLevel logLevel = LOG_LEVEL_DEFAULT;
+LogLevel _logLevel_ = LOG_LEVEL_DEFAULT;
 
-void setLogLevel(LogLevel level) { logLevel = level; }
-LogLevel getLogLevel(void) { return logLevel; }
+void setLogLevel(LogLevel level) { _logLevel_ = level; }
+LogLevel getLogLevel(void) { return _logLevel_; }
 
 #define LOG_TIME_BUFFER_LEN 30 //GMT 2019-01-01 23:59:59
 
