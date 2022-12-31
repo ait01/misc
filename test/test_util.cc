@@ -74,3 +74,13 @@ TEST_F(Util, ZeroizePositive) {
     checkBuffZero(buffs[0]);
     printHex("Buffer0", buffs[0], true);
 }
+
+TEST_F(Util, ZeroizeBadParams) {
+    buffs[0] = random(BUFF_LEN);
+    checkBuffRandom(buffs[0]);
+
+    auto rc = zeroize(nullptr, buffs[0].size());
+    ASSERT_EQ(rc, RC::BAD_PARAMS);
+    rc = zeroize(buffs[0].data(), 0);
+    ASSERT_EQ(rc, RC::BAD_PARAMS);
+}
