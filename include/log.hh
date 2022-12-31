@@ -1,7 +1,7 @@
-#include <vector>
-
 #ifndef LOG_H
 #define LOG_H
+
+#include <vector>
 
 #define LOG(LOG_LEVEL, logFunc, funcName, line, ...) do { if (logLevel <= LOG_LEVEL) (logFunc)(funcName, line, __VA_ARGS__); } while (0)
 #define LOGD(...) LOG(LogLevel::LOG_LEVEL_DEBUG, logDebug, __func__, __LINE__, __VA_ARGS__);
